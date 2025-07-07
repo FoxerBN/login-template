@@ -47,3 +47,12 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+//TODO 
+// if (req.headers.get("x-api-key") !== process.env.INTERNAL_API_SECRET) {
+//   return new Response("Forbidden", { status: 403 });
+// }
+// headers: {
+//   "Content-Type": "application/json",
+//   "x-api-key": process.env.INTERNAL_API_SECRET!,
+// }

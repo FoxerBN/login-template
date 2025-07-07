@@ -16,3 +16,6 @@ export async function POST(req: Request) {
   return new Response(JSON.stringify({ ok: true }), { status: 200 });
 }
 
+//todo ZOD VALIDATION
+//todo  RLS IN DATABASE
+//todo LOGGER
