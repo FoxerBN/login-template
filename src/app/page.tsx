@@ -29,22 +29,22 @@ export default function Home() {
         }}
       >
         <Github
-          className="cursor-pointer transition hover:scale-110 hover:brightness-110"
+          className="cursor-pointer brightness-75 transition hover:scale-110 hover:brightness-110"
           onClick={() => signIn("github")}
           size={56}
         />
         <Google
-          className="cursor-pointer transition hover:scale-110 hover:brightness-110"
+          className="cursor-pointer brightness-75 transition hover:scale-110 hover:brightness-110"
           onClick={() => signIn("google")}
           size={56}
         />
         <Discord
-          className="cursor-pointer transition hover:scale-110 hover:brightness-110"
+          className="cursor-pointer brightness-75 transition hover:scale-110 hover:brightness-110"
           onClick={() => signIn("discord")}
           size={56}
         />
         <Facebook
-          className="cursor-pointer transition hover:scale-110 hover:brightness-110"
+          className="cursor-pointer brightness-75 transition hover:scale-110 hover:brightness-110"
           onClick={() => signIn("facebook")}
           size={56}
         />

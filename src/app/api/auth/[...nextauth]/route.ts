@@ -3,8 +3,8 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import DiscordProvider from "next-auth/providers/discord";
 import FacebookProvider from "next-auth/providers/facebook";
-import type { NextAuthOptions } from "next-auth";
 
+import type { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -24,7 +24,24 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     }),
+    
   ],
+  events: {
+    async signIn({ user, account }) {
+      if (!account) return;
+
+      await fetch(`${process.env.NEXTAUTH_URL}/api/save-user`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          provider: account.provider,
+          provider_id: account.providerAccountId,
+          username: user.name,
+          email: user.email,
+        }),
+      });
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
