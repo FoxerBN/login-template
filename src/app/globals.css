@@ -43,3 +43,25 @@ footer {
  
   text-align: center;
 }
+
+@keyframes grow-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-grow-in {
+  animation: grow-in 1s cubic-bezier(0.4, 0, 0.2, 1);
+}

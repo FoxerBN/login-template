@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header>
       <h1>My Site Header</h1>
-      <button onClick={() => signOut()}>{session ? "Sign out" : ""}</button>
+      <button className="cursor-pointer brightness-60 hover:brightness-110 hover:scale-105" onClick={() => signOut()}>{session ? "Sign out" : ""}</button>
     </header>
   );
 }
