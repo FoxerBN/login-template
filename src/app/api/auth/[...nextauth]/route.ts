@@ -1,3 +1,4 @@
+
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -5,6 +6,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import FacebookProvider from "next-auth/providers/facebook";
 
 import type { NextAuthOptions } from "next-auth";
+import logger from "@/app/lib/logger";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -30,19 +32,43 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       if (!account) return;
 
-      await fetch(`${process.env.NEXTAUTH_URL}/api/save-user`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": process.env.INTERNAL_API_SECRET!,
-        },
-        body: JSON.stringify({
-          provider: account.provider,
-          provider_id: account.providerAccountId,
-          username: user.name,
-          email: user.email,
-        }),
-      });
+      try {
+        await fetch(`${process.env.NEXTAUTH_URL}/api/save-user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.INTERNAL_API_SECRET!,
+          },
+          body: JSON.stringify({
+            provider: account.provider,
+            provider_id: account.providerAccountId,
+            username: user.name,
+            email: user.email,
+          }),
+        });
+      } catch (error) {
+        logger.error("Error saving user during signIn event", { error });
+      }
+
+      logger.info(`User signed in: ${user.name} (${user.email}) with provider: ${account.provider}`);
+    },
+  },
+  logger: {
+    error(code, metadata) {
+      const metaObj = metadata && typeof metadata === "object" ? metadata : {};
+      const errorMsg = (metaObj as { error?: { message?: string } }).error?.message || 
+                      (metaObj as { message?: string }).message || "";
+      
+      logger.error(
+        `[next-auth][error][${code}]${errorMsg ? ` - ${errorMsg}` : ""}`,
+        metadata
+      );
+    },
+    warn(code) {
+      logger.warn(`[next-auth][warn][${code}]`);
+    },
+    debug(code, metadata) {
+      logger.debug(`[next-auth][debug][${code}]`, metadata);
     },
   },
 };
