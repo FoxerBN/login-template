@@ -32,7 +32,10 @@ export const authOptions: NextAuthOptions = {
 
       await fetch(`${process.env.NEXTAUTH_URL}/api/save-user`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.INTERNAL_API_SECRET!,
+        },
         body: JSON.stringify({
           provider: account.provider,
           provider_id: account.providerAccountId,
@@ -47,12 +50,3 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
-
-//TODO 
-// if (req.headers.get("x-api-key") !== process.env.INTERNAL_API_SECRET) {
-//   return new Response("Forbidden", { status: 403 });
-// }
-// headers: {
-//   "Content-Type": "application/json",
-//   "x-api-key": process.env.INTERNAL_API_SECRET!,
-// }
