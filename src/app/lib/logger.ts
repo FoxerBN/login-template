@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { createLogger, format, transports } from "winston";
 // import path from "path";
 
+// const logDir = path.join(process.cwd(), "logs");
 // const logDir = path.join(process.cwd(), "logs");
 
 // const logger = createLogger({
@@ -33,3 +35,24 @@
 // });
 
 // export default logger;
+// src/app/lib/logger.ts
+
+const logger = {
+  info: (...args: any[]) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log(...args);
+    }
+  },
+  error: (...args: any[]) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.error(...args);
+    }
+  },
+  warn: (...args: any[]) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(...args);
+    }
+  },
+};
+
+export default logger;

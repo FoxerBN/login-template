@@ -6,7 +6,11 @@ import DiscordProvider from "next-auth/providers/discord";
 import FacebookProvider from "next-auth/providers/facebook";
 
 import type { NextAuthOptions } from "next-auth";
+<<<<<<< HEAD
 // import logger from "@/app/lib/logger";
+=======
+
+>>>>>>> 6e45d10 (added winston logger common&error)
 
 const authOptions: NextAuthOptions = {
   providers: [
