@@ -8,7 +8,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import type { NextAuthOptions } from "next-auth";
 import logger from "@/app/lib/logger";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
