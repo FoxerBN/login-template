@@ -6,7 +6,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import FacebookProvider from "next-auth/providers/facebook";
 
 import type { NextAuthOptions } from "next-auth";
-import logger from "@/app/lib/logger";
+// import logger from "@/app/lib/logger";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -47,30 +47,32 @@ const authOptions: NextAuthOptions = {
           }),
         });
       } catch (error) {
-        logger.error("Error saving user during signIn event", { error });
+        // logger.error("Error saving user during signIn event", { error });
+        console.log("Error saving user during signIn event", error);
+        
       }
 
-      logger.info(`User signed in: ${user.name} (${user.email}) with provider: ${account.provider}`);
+      // logger.info(`User signed in: ${user.name} (${user.email}) with provider: ${account.provider}`);
     },
   },
-  logger: {
-    error(code, metadata) {
-      const metaObj = metadata && typeof metadata === "object" ? metadata : {};
-      const errorMsg = (metaObj as { error?: { message?: string } }).error?.message || 
-                      (metaObj as { message?: string }).message || "";
+  // logger: {
+  //   error(code, metadata) {
+  //     const metaObj = metadata && typeof metadata === "object" ? metadata : {};
+  //     const errorMsg = (metaObj as { error?: { message?: string } }).error?.message || 
+  //                     (metaObj as { message?: string }).message || "";
       
-      logger.error(
-        `[next-auth][error][${code}]${errorMsg ? ` - ${errorMsg}` : ""}`,
-        metadata
-      );
-    },
-    warn(code) {
-      logger.warn(`[next-auth][warn][${code}]`);
-    },
-    debug(code, metadata) {
-      logger.debug(`[next-auth][debug][${code}]`, metadata);
-    },
-  },
+  //     logger.error(
+  //       `[next-auth][error][${code}]${errorMsg ? ` - ${errorMsg}` : ""}`,
+  //       metadata
+  //     );
+  //   },
+  //   warn(code) {
+  //     logger.warn(`[next-auth][warn][${code}]`);
+  //   },
+  //   debug(code, metadata) {
+  //     logger.debug(`[next-auth][debug][${code}]`, metadata);
+  //   },
+  // },
 };
 
 const handler = NextAuth(authOptions);
